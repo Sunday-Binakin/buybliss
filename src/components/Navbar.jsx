@@ -11,7 +11,7 @@ const Navbar = () => {
         <div className='flex flex-col md:flex-row justify-between items-center mt-4 px-4 gap-4'>
             <div className='flex items-center w-full md:w-auto gap-4'>
                 <h1 className='text-2xl md:text-3xl font-extrabold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-blue-600 transition-all duration-300 cursor-pointer'>BUYBLISS</h1>
-                <div className="relative flex-1 md:w-[450px] max-w-[250px] md:ml-10">
+                <div className="relative flex-1 md:w-[450px] max-w-[250px] md:ml-2">
                     <input
                         type="text"
                         className='w-full h-8 block pl-10 border border-slate-400 rounded-lg focus:border-[0.5px] md:w-[900px]'
@@ -19,10 +19,15 @@ const Navbar = () => {
                     />
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
                 </div>
-                <Menu className='block md:hidden' />
+                <div className='flex items-center gap-2'>
+                    <ShoppingCart />
+                    <Heart />
+                </div>
+                {/* <Menu className='block md:hidden' /> */}
             </div>
 
             {/* Desktop Navigation */}
+        
             <div className='hidden md:flex items-center gap-4'>
                 <ShoppingCart />
                 <Heart />
