@@ -1,40 +1,70 @@
-import React from 'react';
-import { Search } from 'lucide-react';
-import { ShoppingCart } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu } from 'lucide-react';
 import { Heart } from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { X } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Use camelCase for state setter
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <div className='flex justify-between items-center mt-4 px-4'>
-            <h1 className='text-xl font-bold'>BUYBLISS</h1>
-            <div className="relative">
+        <>
+            <div className='flex flex-row justify-between items-center p-4 gap-4'>
+                <div className='flex gap-2'>
+                    <Menu onClick={toggleMenu} />
+                    <span onClick={toggleMenu}>MENU</span>
+                </div>
+
+                <h1 className='font-semibold text-[18px]'>BUYBLISS</h1>
+
+                <div className='flex gap-2'>
+                    <Heart />
+                    <ShoppingBag />
+                </div>
+            </div>
+
+            {/* Sidebar menu display */}
+            {isMenuOpen && (
+                <div className='bg-white w-80 h-screen fixed top-0 left-0 z-50 p-4 overflow-y-auto'> {/* Full height and scrollable */}
+                    <X className='cursor-pointer' onClick={toggleMenu} /> {/* Close icon */}
+                    <div className='border-b border-black my-4' /> 
+                    <div className='flex gap-4'>
+                        <span>MEN</span>
+                        <span>WOMEN</span>
+                    </div>
+                    <div className='border-b border-black my-4' /> 
+                    <span>New Arrival</span>
+                    <div className='border-b border-black my-8' /> 
+
+                    {['Shoe type', 'Occasion', 'Brands', 'Shoe care', 'Accessories', 'Services', 'Journal', 'About us'].map((item, index) => (
+                        <div key={item}>
+                            <div className='flex items-center justify-between my-2'>
+                                <span>{item}</span>
+                                {item !== 'Journal' && <ChevronRight />} {/* Only show Chevron for items except 'Journal' */}
+                            </div>
+                            <div className='border-b border-black my-2' /> {/* Horizontal line after each item */}
+                        </div>
+                    ))}
+                </div>
+            )}
+            {/* End of sidebar menu display */}
+
+            <div className='relative p-2 flex'>
                 <input
                     type="text"
-                    className='w-[450px] h-7 block pl-10 border-slate-400 rounded'
-                    placeholder='What are you looking for?'
+                    placeholder='Search....'
+                    className='border-solid border-2 border-gray-400 h-9 w-full rounded pl-10' // Adjust padding for search icon
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
-            <div className='flex items-center gap-4'>
-                <ShoppingCart />
-                <Heart />
-                <div className='border-l border-gray-400 h-8 mx-2' /> 
-                <div className='h-10 w-10 rounded-full bg-gray-600 flex items-center justify-center text-white'>
-                    AR
-                </div>
-                <div className='flex items-center pl-2'>
-                    <div className='flex flex-col'>
-                        <h1>Welcome Back!</h1>
-                        <h1 className='font-bold'>Khaldoon Mansour</h1>
-                    </div>
-                    <ChevronDown className='ml-2 mt-1 text-gray-600' />
-                </div>
-            </div>
-        </div>
+        </>
     );
 }
 
 export default Navbar;
-
- 
