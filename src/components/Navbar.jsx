@@ -1,54 +1,69 @@
-import React from 'react';
-import { Search } from 'lucide-react';
-import { ShoppingCart } from 'lucide-react';
-import { Heart } from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
-import ReactCountryFlag from "react-country-flag"
+import { Heart } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { X } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Use camelCase for state setter
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <div className='flex flex-col md:flex-row justify-between items-center mt-4 px-4 gap-4'>
-            <div className='flex items-center w-full md:w-auto gap-4'>
-                <h1 className='text-2xl md:text-3xl font-extrabold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-blue-600 transition-all duration-300 cursor-pointer'>BUYBLISS</h1>
-                <div className="relative flex-1 md:w-[450px] max-w-[250px] md:ml-2">
-                    <input
-                        type="text"
-                        className='w-full h-8 block pl-10 border border-slate-400 rounded-lg focus:border-[0.5px] md:w-[900px]'
-                        placeholder='What are you looking for?'
-                    />
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
+        <>
+            <div className='flex flex-row justify-between items-center p-4 gap-4'>
+                <div className='flex gap-2'>
+                    <Menu onClick={toggleMenu} />
+                    <span onClick={toggleMenu}>MENU</span>
                 </div>
-                <div className='flex items-center gap-2'>
-                    <ShoppingCart />
+
+                <h1 className='font-semibold text-[18px]'>BUYBLISS</h1>
+
+                <div className='flex gap-2'>
                     <Heart />
+                    <ShoppingBag />
                 </div>
-                {/* <Menu className='block md:hidden' /> */}
             </div>
 
-            {/* Desktop Navigation */}
-        
-            <div className='hidden md:flex items-center gap-4'>
-                <ShoppingCart />
-                <Heart />
-                <div className="flex items-center gap-1 ml-2">
-                    <ReactCountryFlag countryCode="US" svg style={{width: '24px', height: '24px'}} />
-                    <span>English</span>
-                    <ChevronDown className='ml-2 mt-1 text-black' />
-                </div>
-                <div className='border-l border-gray-400 h-8 mx-2' />
-                <div className='h-10 w-10 rounded-full bg-gray-600 flex items-center justify-center text-white'>
-                    AR
-                </div>
-                <div className='flex items-center pl-2'>
-                    <div className='flex flex-col'>
-                        <h1>Welcome Back!</h1>
-                        <h1 className='font-bold'>Khaldoon Mansour</h1>
+            {/* Sidebar menu display */}
+            {isMenuOpen && (
+                <div className='bg-white w-80 h-screen fixed top-0 left-0 z-50 p-4 overflow-y-auto'> {/* Full height and scrollable */}
+                    <X className='cursor-pointer' onClick={toggleMenu} /> {/* Close icon */}
+                    <div className='border-b border-black my-4' /> 
+                    <div className='flex gap-4'>
+                        <span>MEN</span>
+                        <span>WOMEN</span>
                     </div>
-                    <ChevronDown className='ml-2 mt-1 text-gray-600' />
+                    <div className='border-b border-black my-4' /> 
+                    <span>New Arrival</span>
+                    <div className='border-b border-black my-8' /> 
+
+                    {['Shoe type', 'Occasion', 'Brands', 'Shoe care', 'Accessories', 'Services', 'Journal', 'About us'].map((item, index) => (
+                        <div key={item}>
+                            <div className='flex items-center justify-between my-2'>
+                                <span>{item}</span>
+                                {item !== 'Journal' && <ChevronRight />} {/* Only show Chevron for items except 'Journal' */}
+                            </div>
+                            <div className='border-b border-black my-2' /> {/* Horizontal line after each item */}
+                        </div>
+                    ))}
                 </div>
+            )}
+            {/* End of sidebar menu display */}
+
+            <div className='relative p-2 flex'>
+                <input
+                    type="text"
+                    placeholder='Search....'
+                    className='border-solid border-2 border-gray-400 h-9 w-full rounded pl-10' // Adjust padding for search icon
+                />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
-        </div>
+        </>
     );
 }
 
